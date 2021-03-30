@@ -1,9 +1,9 @@
-const { AuthenticationError } = require('apollo-server-errors');
+const { AuthenticationError, UserInputError } = require('apollo-server-errors');
 const Post = require('../../models/Post.model');
 const checkAuth = require('../../utils/checkAuth');
 
 module.exports = {
-    
+
     Query: {
         async getPosts() {
             try {
@@ -17,8 +17,8 @@ module.exports = {
         async getPost(_, { postId }) {
             try {
                 const post = await Post.findById(postId);
-                if(post) return post;
-                
+                if (post) return post;
+
                 throw new Error('Post not found');
 
             } catch (error) {
@@ -29,7 +29,10 @@ module.exports = {
     Mutation: {
         async createPost(_, { body }, context) {
             const user = checkAuth(context);
-            // console.log(user);
+            
+            body = body.trim();
+            if(body === '')
+                throw new UserInputError('Post cannot be empty');
 
             const newPost = new Post({
                 body,
@@ -48,7 +51,7 @@ module.exports = {
 
             try {
                 const post = await Post.findById(postId);
-                if(post.username === user.username) {
+                if (post.username === user.username) {
                     await post.delete();
                     return 'Post deleted successfully';
                 }
@@ -56,7 +59,25 @@ module.exports = {
             } catch (error) {
                 throw new Error(error);
             }
-        }
+        },
 
+        async likePost(_, { postId }, context) {
+            const user = checkAuth(context);
+
+            const post = await Post.findById(postId);
+            if (post) {
+                const likeIndex = post.likes.findIndex(like => like.username === user.username);
+                if (likeIndex === -1) {
+                    post.likes.unshift({
+                        username: user.username,
+                        createdAt: new Date().toISOString()
+                    })
+                } else {
+                    post.likes.splice(likeIndex, 1);
+                }
+                await post.save();
+                return post;
+            } else throw new UserInputError('Post not found');
+        }
     }
 }
