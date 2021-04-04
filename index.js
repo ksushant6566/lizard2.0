@@ -10,10 +10,10 @@ const Post = require('./models/Post.model');
 const User = require('./models/User.model');
 
 // typedefs
-const typeDefs = require('./Graphql/typeDefs');
+const typeDefs = require('./graphql/typeDefs');
 
 // resolvers
-const resolvers = require('./Graphql/resolvers');
+const resolvers = require('./graphql/resolvers');
 
 const server = new ApolloServer({
     typeDefs,
