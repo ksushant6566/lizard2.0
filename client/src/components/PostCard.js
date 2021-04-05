@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 
 import { Card, Icon, Label, Image, Button } from 'semantic-ui-react'
 import Like from '../components/Like'
+import Delete from '../components/Delete'
 
 import { AuthContext } from '../context/auth';
 
@@ -26,7 +27,7 @@ const PostCard = ({ post }) => {
                 <Card.Header>{username}</Card.Header>
                 <Card.Meta
                     as={Link}
-                    to={`/post/${id}`}
+                    to={`/posts/${id}`}
                 >
                     {moment(createdAt).fromNow()}
                 </Card.Meta>
@@ -44,7 +45,7 @@ const PostCard = ({ post }) => {
                     </Label>
                 </Button>
                 {user && user.username && user.username === username && (
-                    <Button as='div' color='red' icon='trash' floated='right'/>
+                    <Delete postId={id} />
                 )}
             </Card.Content>
         </Card>

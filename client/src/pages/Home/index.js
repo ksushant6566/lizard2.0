@@ -40,7 +40,7 @@ const Home = () => {
                             trigger={
                                 <Button 
                                     onClick={() => setOpenPopup(!openPopup)} 
-                                    color='teal' 
+                                    color='blue' 
                                     icon='add' 
                                     size='huge' />
                             }

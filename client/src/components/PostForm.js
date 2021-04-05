@@ -44,7 +44,7 @@ const PostForm = ({ setOpenPopup }) => {
                     size='large'
                     error={error ? true : false}
                 />
-                <Button type='submit' color='facebook'>
+                <Button type='submit' color='blue'>
                     Submit
                 </Button>
             </Form.Field>
