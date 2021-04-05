@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { FETCH_POST_QUERY, CREATE_COMMENT_MUTATION } from '../../graphql/gql';
 import Like from '../../components/Like';
-import { Card, Grid, Image, Loader, Button, Label, Message, Form } from 'semantic-ui-react';
+import { Card, Grid, Image, Loader, Button, Label, Message, Form, Transition } from 'semantic-ui-react';
 import Delete from '../../components/Delete';
 
 const SinglePost = ({ match, history }) => {
@@ -21,7 +21,7 @@ const SinglePost = ({ match, history }) => {
     });
 
     const [submitComment] = useMutation(CREATE_COMMENT_MUTATION, {
-        variables: { 
+        variables: {
             postId,
             body: comment
         },
@@ -120,29 +120,31 @@ const SinglePost = ({ match, history }) => {
                             </Card.Content>
                         </Card>
                     )}
-                    
+
                     {commentsCount > 0 && (
                         <h3>
                             Comments
                         </h3>
                     )}
-                    {commentsCount > 0 && (
-                        comments.map(comment => (
-                            <Card fluid key={comment.id}>
-                                <Card.Content>
-                                    {user && user.username && user.username === comment.username && (
-                                        <Delete
-                                            postId={postId}
-                                            commentId={comment.id}
-                                        />
-                                    )}
-                                    <Card.Header >{comment.username}</Card.Header>
-                                    <Card.Description>{comment.body}</Card.Description>
-                                    <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
-                                </Card.Content>
-                            </Card>
-                        ))
-                    )}
+                    <Transition.Group>
+                        {commentsCount > 0 && (
+                            comments.map(comment => (
+                                <Card fluid key={comment.id}>
+                                    <Card.Content>
+                                        {user && user.username && user.username === comment.username && (
+                                            <Delete
+                                                postId={postId}
+                                                commentId={comment.id}
+                                            />
+                                        )}
+                                        <Card.Header >{comment.username}</Card.Header>
+                                        <Card.Description>{comment.body}</Card.Description>
+                                        <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
+                                    </Card.Content>
+                                </Card>
+                            ))
+                        )}
+                    </Transition.Group>
                 </Grid.Column>
             </Grid.Row>
         </Grid>
