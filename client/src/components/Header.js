@@ -53,10 +53,7 @@ const Header = () => {
             to='/login'
           />
         </Menu.Menu>
-      )
-
-      }
-      
+      )}
     </Menu>
   )
 }

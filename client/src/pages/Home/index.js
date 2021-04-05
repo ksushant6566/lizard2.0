@@ -17,12 +17,7 @@ const Home = () => {
     const { user } = useContext(AuthContext);
     const [openPopup, setOpenPopup] = useState(false)
 
-    const { loading, data } = useQuery(FETCH_POSTS_QUERY);
-    let posts = []
-
-    if (data) {
-        posts = data.getPosts;
-    }
+    const { loading, data: { getPosts : posts}={} } = useQuery(FETCH_POSTS_QUERY);
 
     return (
         <Grid columns={1} >

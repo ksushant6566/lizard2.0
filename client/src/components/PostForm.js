@@ -13,16 +13,16 @@ const PostForm = ({ setOpenPopup }) => {
             const data = proxy.readQuery({
                 query: FETCH_POSTS_QUERY
             });
-            data.getPosts = [post, ...data.getPosts];
+            
             proxy.writeQuery({
-                query: FETCH_POSTS_QUERY, data
+                query: FETCH_POSTS_QUERY, 
+                data: {
+                    getPosts: [post, ...data.getPosts]
+                }
             })
 
-            setOpenPopup(false);
             setBody('');
-        },
-        onError(err) {
-            console.log(err);
+            setOpenPopup(false);
         },
         variables: { body }
     })
