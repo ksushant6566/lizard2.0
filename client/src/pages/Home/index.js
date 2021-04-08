@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useSubscription } from "@apollo/react-hooks";
 
-import { FETCH_POSTS_QUERY } from '../../graphql/gql';
+import { FETCH_POSTS_QUERY, NEW_POST_NOTIFICATION_SUBSCRIPTION } from '../../graphql/gql';
 
 // components
 import PostCard from '../../components/PostCard';
 import PostForm from '../../components/PostForm';
-import { Grid, Loader, Button, Popup, Transition } from 'semantic-ui-react';
+import { Grid, Loader, Button, Popup, Transition, Icon } from 'semantic-ui-react';
 
 // context
 import { AuthContext } from '../../context/auth';
@@ -15,12 +15,40 @@ import './styles.css'
 
 const Home = () => {
     const { user } = useContext(AuthContext);
-    const [openPopup, setOpenPopup] = useState(false)
+    const [openPopup, setOpenPopup] = useState(false);
+    const [showGetNewPosts, setShowGetNewPosts] = useState(false);
 
     const { loading, data: { getPosts : posts}={} } = useQuery(FETCH_POSTS_QUERY);
+    const { data } =  useSubscription(NEW_POST_NOTIFICATION_SUBSCRIPTION, {
+        fetchPolicy: 'network-only',
+        onSubscriptionData({ subscriptionData: { data: { notification} } }) {
+            if(notification.username !== user.username)
+                setShowGetNewPosts(true);
+        }
+    })
 
     return (
         <Grid columns={1} >
+            {showGetNewPosts && (
+                <div style={{
+                        position: 'fixed',
+                        top: '15%',
+                        left: '50%',
+                        transform: 'translate(-50%)',
+                        zIndex: '10',
+                }}>
+                    <Button 
+                        as='div'
+                        color='blue'
+                        onClick={() => {
+                        window.location.reload()
+                        setShowGetNewPosts(false);
+                    }} >
+                        <Icon name='redo' />
+                        New Posts
+                    </Button>
+                </div>
+            )}
             <Grid.Row className='page-title'>
                 <h2>
                     Recent Posts
@@ -31,10 +59,10 @@ const Home = () => {
                     <div 
                     style={{
                         position: 'fixed',
-                        bottom: '5%',
+                        bottom: '1%',
                         left: '50%',
                         transform: 'translate(-50%)',
-                        zIndex: '1',
+                        zIndex: '10',
                     }}>
                         <Popup
                             trigger={

@@ -42,6 +42,15 @@ module.exports = {
             });
 
             const post = await newPost.save();
+
+            context.pubsub.publish('NOTIFICATION', {
+                notification: {
+                    type: 'new posts',
+                    postId: post._id,
+                    username: user.username
+                }
+            });
+
             return post;
         },
 
@@ -78,6 +87,11 @@ module.exports = {
                 await post.save();
                 return post;
             } else throw new UserInputError('Post not found');
+        }
+    }, 
+    Subscription: {
+        notification: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NOTIFICATION')
         }
     }
 }

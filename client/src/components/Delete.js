@@ -3,11 +3,11 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { DELETE_POST_MUTATION, FETCH_POSTS_QUERY, DELETE_COMMENT_MUTATION } from '../graphql/gql';
 
-import { Button, Confirm } from 'semantic-ui-react';
+import { Button, Confirm, Popup } from 'semantic-ui-react';
 
 
 const Delete = ({ postId, callback, commentId }) => {
-    const[confirmOpen, setConfirmOpen] = useState(false);
+    const [confirmOpen, setConfirmOpen] = useState(false);
 
     const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION;
 
@@ -16,8 +16,8 @@ const Delete = ({ postId, callback, commentId }) => {
 
         update(proxy) {
             setConfirmOpen(false);
-            
-            if(!commentId) {
+
+            if (!commentId) {
                 const data = proxy.readQuery({
                     query: FETCH_POSTS_QUERY
                 })
@@ -29,7 +29,7 @@ const Delete = ({ postId, callback, commentId }) => {
                     }
                 })
             }
-            if(callback) callback();
+            if (callback) callback();
         },
 
         onError(err) {
@@ -39,12 +39,20 @@ const Delete = ({ postId, callback, commentId }) => {
 
     return (
         <>
-            <Button
-                as='div'
-                color='red'
-                icon='trash'
-                floated='right'
-                onClick={() => setConfirmOpen(true)}
+            <Popup
+                trigger={
+                    <Button
+                        as='div'
+                        color='red'
+                        icon='trash'
+                        floated='right'
+                        onClick={() => setConfirmOpen(true)}
+                    />
+                }
+                content='delete'
+                inverted
+                on='hover'
+                position='top center'
             />
             <Confirm
                 open={confirmOpen}

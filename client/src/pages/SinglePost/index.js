@@ -81,7 +81,7 @@ const SinglePost = ({ match, history }) => {
                                 onClick={() => console.log('comment')}
                             >
                                 <Button basic color='blue' icon='comments' />
-                                <Label basic color='blue' pointing='left' >{commentsCount}</Label>
+                                <Label basic color='blue' >{commentsCount}</Label>
                             </Button>
 
                             {user && user.username && user.username === username && (

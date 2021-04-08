@@ -153,3 +153,13 @@ export const CREATE_COMMENT_MUTATION = gql`
         }
     }
 `
+
+export const NEW_POST_NOTIFICATION_SUBSCRIPTION = gql`
+    subscription notification {
+        notification {
+            type
+            postId
+            username
+        }
+    }
+`

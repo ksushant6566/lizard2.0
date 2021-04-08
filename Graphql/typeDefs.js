@@ -3,7 +3,7 @@ const { gql } = require('apollo-server');
 module.exports = gql`
 
     type Post {
-        id: String!
+        id: ID!
         body: String!
         createdAt: String!
         username: String!
@@ -34,6 +34,12 @@ module.exports = gql`
         createdAt: String!
     }
 
+    type Notification {
+        type: String!
+        username: String!
+        postId: ID!
+    }
+
     input RegisterInput {
         username: String!
         email: String!
@@ -42,7 +48,7 @@ module.exports = gql`
     }
 
     type Query {
-        getPosts : [Post]
+        getPosts: [Post]
         getPost(postId: ID!): Post
     }
 
@@ -60,6 +66,10 @@ module.exports = gql`
         deleteComment(postId: ID!, commentId: ID!): Post!
 
         likePost(postId: ID!): Post!
+    }
+
+    type Subscription {
+        notification: Notification!
     }
 
 `

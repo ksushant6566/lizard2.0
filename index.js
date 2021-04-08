@@ -1,5 +1,5 @@
 // dependencies
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer, PubSub } = require('apollo-server');
 const mongoose = require('mongoose');
 
 // config variables
@@ -15,10 +15,15 @@ const typeDefs = require('./graphql/typeDefs');
 // resolvers
 const resolvers = require('./graphql/resolvers');
 
+const pubsub = new PubSub();
+
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => ({ req })
+    context: ({ req }) => ({ req, pubsub }),
+    subscriptions: {
+        path: '/subscriptions'
+    },
 });
 
 mongoose.connect(ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true })
