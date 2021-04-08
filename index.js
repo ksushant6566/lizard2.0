@@ -10,10 +10,10 @@ const Post = require('./models/Post.model');
 const User = require('./models/User.model');
 
 // typedefs
-const typeDefs = require('./graphql/typeDefs.js');
+const typeDefs = require('./Graphql/typeDefs.js');
 
 // resolvers
-const resolvers = require('./graphql/resolvers');
+const resolvers = require('./Graphql/resolvers');
 
 const pubsub = new PubSub();
 
