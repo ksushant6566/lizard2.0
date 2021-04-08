@@ -14,7 +14,7 @@ const httpLink = createHttpLink({
 });
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://lizard-backend.herokuapp.com/subscriptions',
+  uri: 'wss://lizard-backend.herokuapp.com/subscriptions',
   options: {
     reconnect: true
   }
