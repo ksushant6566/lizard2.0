@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useState } from 'react';
 import { useQuery, useSubscription } from "@apollo/react-hooks";
 
@@ -24,6 +25,7 @@ const Home = () => {
         onSubscriptionData({ subscriptionData: { data: { notification} } }) {
             if(notification.username !== user.username)
                 setShowGetNewPosts(true);
+                
         }
     })
 
