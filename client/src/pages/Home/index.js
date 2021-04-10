@@ -45,14 +45,12 @@ const Home = () => {
             if((now - last < delay) || yoffset < y || isLastPage) {
                 return;
             }
-            console.log("exec")
             last = now;
             return fn();
         }
     }
 
     const handleFetch = () => {
-        console.log("handleFetch")
         fetchMore({
             variables: {prevKey},
             updateQuery(prev, { fetchMoreResult: { getPosts } }) {
@@ -66,7 +64,7 @@ const Home = () => {
         })
     }
 
-    window.onscroll = handleThrottleScroll(handleFetch, 100000)
+    window.onscroll = handleThrottleScroll(handleFetch, 5000)
 
     return (
         <div className='wrap'>
