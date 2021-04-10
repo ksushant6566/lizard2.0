@@ -4,3 +4,8 @@
     font-size: 2rem;
     margin-top: 10px;
 }
+
+.loadmore {
+    height: 100px;
+    background-color: aquamarine;
+}

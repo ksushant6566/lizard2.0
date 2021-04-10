@@ -10,13 +10,13 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { setContext} from 'apollo-link-context';
 
 const httpLink = createHttpLink({
-  uri: 'https://lizard-backend.herokuapp.com/'
-  // uri: 'http://localhost:5000/'
+  // uri: 'https://lizard-backend.herokuapp.com/'
+  uri: 'http://localhost:5000/'
 });
 
 const wsLink = new WebSocketLink({
-  uri: 'wss://lizard-backend.herokuapp.com/subscriptions',
-  // uri: 'ws://localhost:5000/subscriptions',
+  // uri: 'wss://lizard-backend.herokuapp.com/subscriptions',
+  uri: 'ws://localhost:5000/subscriptions',
   options: {
     reconnect: true
   }
