@@ -13,7 +13,7 @@ module.exports = {
                     return posts;
                 }
 
-                const posts = await Post.find().limit(2).sort({ createdAt: -1 });
+                const posts = await Post.find().limit(10).sort({ createdAt: -1 });
                 return posts;
             } catch (error) {
                 throw new Error(error);
