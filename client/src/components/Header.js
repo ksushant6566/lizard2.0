@@ -21,6 +21,7 @@ const Header = () => {
     <Menu pointing secondary size='massive' color='violet'>
       <Menu.Item
         name='home'
+        content='Lizard'
         active={activeItem === 'home'}
         onClick={handleItemClick}
         as={Link}

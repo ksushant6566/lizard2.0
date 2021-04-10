@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useQuery, useSubscription } from "@apollo/react-hooks";
 
 import { FETCH_POSTS_QUERY, NEW_POST_NOTIFICATION_SUBSCRIPTION } from '../../graphql/gql';
@@ -18,8 +18,14 @@ const Home = () => {
     const { user } = useContext(AuthContext);
     const [openPopup, setOpenPopup] = useState(false);
     const [showGetNewPosts, setShowGetNewPosts] = useState(false);
+    const [prevKey, setPrevKey] = useState("");
+    
+    const { loading, data: { getPosts : posts}={}, fetchMore } = useQuery(FETCH_POSTS_QUERY, {
+        onCompleted({ getPosts }) {
+            setPrevKey(getPosts[getPosts.length-1].id)
+        }
+    });
 
-    const { loading, data: { getPosts : posts}={} } = useQuery(FETCH_POSTS_QUERY);
     const { data } =  useSubscription(NEW_POST_NOTIFICATION_SUBSCRIPTION, {
         fetchPolicy: 'network-only',
         onSubscriptionData({ subscriptionData: { data: { notification} } }) {
@@ -28,6 +34,21 @@ const Home = () => {
                 
         }
     })
+
+    const handleLoadMore = () => {
+
+        fetchMore({
+            variables: {prevKey},
+            updateQuery(prev, { fetchMoreResult: { getPosts } }) {
+                if(getPosts.length !== 0) 
+                    setPrevKey(getPosts[getPosts.length-1].id)
+                
+                return {
+                    getPosts: [...prev.getPosts, ...getPosts]
+                }
+            }
+        })
+    }
 
     return (
         <Grid columns={1} >
@@ -86,7 +107,7 @@ const Home = () => {
                 )}
 
                 {loading ? (
-                    <div className="loading">
+                    <div style={{ marginTop: '300px' }}>
                         <Loader active />
                     </div>
                 ) : (
@@ -100,6 +121,11 @@ const Home = () => {
                     }
                     </Transition.Group>
                 )}
+            </Grid.Row>
+            <Grid.Row centered>
+                <Button onClick={handleLoadMore} >
+                    Load more
+                </Button>
             </Grid.Row>
         </Grid>
     )

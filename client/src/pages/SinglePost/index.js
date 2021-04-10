@@ -62,8 +62,8 @@ const SinglePost = ({ match, history }) => {
                         <Card.Content>
                             <Image
                                 floated='right'
-                                size="mini"
-                                src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
+                                size='tiny'
+                                src="https://react.semantic-ui.com/images/avatar/small/matthew.png"
                                 as={Link}
                                 to={`/users/${username}`}
                             />
@@ -121,11 +121,11 @@ const SinglePost = ({ match, history }) => {
                         </Card>
                     )}
 
-                    {commentsCount > 0 && (
-                        <h3>
-                            Comments
-                        </h3>
-                    )}
+                    
+                    <h3>
+                        Comments {commentsCount}
+                    </h3>
+                    
                     <Transition.Group>
                         {commentsCount > 0 && (
                             comments.map(comment => (
