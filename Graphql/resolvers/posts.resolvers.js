@@ -9,7 +9,7 @@ module.exports = {
             try {
 
                 if(prevKey) {
-                    const posts = await Post.find({ _id: { $lt: prevKey } }).limit(2).sort({ createdAt: -1 });
+                    const posts = await Post.find({ _id: { $lt: prevKey } }).limit(10).sort({ createdAt: -1 });
                     return posts;
                 }
 
