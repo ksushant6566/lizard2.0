@@ -87,41 +87,41 @@ const Home = () => {
                             <Icon name='redo' />
                         New Posts
                     </Button>
+                </div>
+            )}
+            
+            <Grid.Row className='page-title'>
+                <h2>
+                    Recent Posts
+                </h2>
+            </Grid.Row>
+            <Grid.Row >
+                {user && (
+                    <div 
+                    style={{
+                        position: 'fixed',
+                        bottom: '1%',
+                        right: '5%',
+                        zIndex: '10',
+                    }}>
+                        <Popup
+                            trigger={
+                                <Button 
+                                    onClick={() => setOpenPopup(!openPopup)} 
+                                    color='blue' 
+                                    icon='add' 
+                                    size='huge' />
+                            }
+                            content={<PostForm setOpenPopup={setOpenPopup} />}
+                            on='click'
+                            position='top left'
+                            size='huge'
+                            wide
+                            positionFixed
+                            open={openPopup}
+                        />
                     </div>
                 )}
-                <Grid.Row className='page-title'>
-                    <h2>
-                        Recent Posts
-                </h2>
-                </Grid.Row>
-                <Grid.Row >
-                    {user && (
-                        <div
-                            style={{
-                                position: 'fixed',
-                                bottom: '1%',
-                                left: '50%',
-                                transform: 'translate(-50%)',
-                                zIndex: '10',
-                            }}>
-                            <Popup
-                                trigger={
-                                    <Button
-                                        onClick={() => setOpenPopup(!openPopup)}
-                                        color='blue'
-                                        icon='add'
-                                        size='huge' />
-                                }
-                                content={<PostForm setOpenPopup={setOpenPopup} />}
-                                on='click'
-                                position='top center'
-                                size='huge'
-                                wide
-                                positionFixed
-                                open={openPopup}
-                            />
-                        </div>
-                    )}
 
                     {loading ? (
                         <div style={{ marginTop: '300px' }}>
