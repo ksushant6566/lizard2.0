@@ -60,8 +60,7 @@ const Home = () => {
                     style={{
                         position: 'fixed',
                         bottom: '1%',
-                        left: '50%',
-                        transform: 'translate(-50%)',
+                        right: '5%',
                         zIndex: '10',
                     }}>
                         <Popup
@@ -74,7 +73,7 @@ const Home = () => {
                             }
                             content={<PostForm setOpenPopup={setOpenPopup} />}
                             on='click'
-                            position='top center'
+                            position='top left'
                             size='huge'
                             wide
                             positionFixed
