@@ -5,6 +5,7 @@
     margin-top: 10px;
 }
 
-.loading {
-    margin-top: 300px
+.loadmore {
+    height: 100px;
+    background-color: aquamarine;
 }

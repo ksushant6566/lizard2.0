@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const FETCH_POSTS_QUERY = gql`
-{
-    getPosts{
+query getPosts($prevKey: ID){
+    getPosts(prevKey: $prevKey){
         body
         id
         createdAt

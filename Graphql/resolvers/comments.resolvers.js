@@ -25,14 +25,14 @@ module.exports = {
 
                 await post.save();
 
-                context.pubsub.publish('NOTIFICATION', {
-                    notification: {
-                        type: 'new_comment',
-                        receiver: post.username,
-                        username: user.username,
-                        postId: postId
-                    }
-                })
+                // context.pubsub.publish('NOTIFICATION', {
+                //     notification: {
+                //         type: 'new_comment',
+                //         receiver: post.username,
+                //         username: user.username,
+                //         postId: postId
+                //     }
+                // })
 
                 return post;
             }else throw new UserInputError('Post not found');

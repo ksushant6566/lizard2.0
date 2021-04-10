@@ -19,8 +19,8 @@ const PostCard = ({ post }) => {
             <Card.Content>
                 <Image
                     floated="right"
-                    size="mini"
-                    src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
+                    size="tiny"
+                    src="https://react.semantic-ui.com/images/avatar/small/matthew.png"
                     as={Link}
                     to={`/users/${username}`}
                 />

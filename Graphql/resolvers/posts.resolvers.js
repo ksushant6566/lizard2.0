@@ -5,9 +5,15 @@ const checkAuth = require('../../utils/checkAuth');
 module.exports = {
 
     Query: {
-        async getPosts() {
+        async getPosts(_, { prevKey }) {
             try {
-                const posts = await Post.find().sort({ createdAt: -1 });
+
+                if(prevKey) {
+                    const posts = await Post.find({ _id: { $lt: prevKey } }).limit(10).sort({ createdAt: -1 });
+                    return posts;
+                }
+
+                const posts = await Post.find().limit(10).sort({ createdAt: -1 });
                 return posts;
             } catch (error) {
                 throw new Error(error);
